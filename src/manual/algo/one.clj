@@ -23,6 +23,12 @@
       (doseq [y (range (- h2 step) 0 (* step -1))]
         (line [(- w2 z) y] [(+ w2 z) y])))))
 
+(defn plot-point
+  ([x y]
+     (plot-point x y 10))
+  ([x y w]
+     (ellipse x y w w)))
+
 (defn draw-plot
   []
   (let [w (width)
@@ -38,17 +44,17 @@
 
     ;; tick marks
     (ticks :h [w h w2 h2] 50 20)
-    (ticks :v [w h w2 h2] 50 20)
-
-    ))
+    (ticks :v [w h w2 h2] 50 20)))
 
 (defn draw []
 
   (stroke 0)
   (stroke-weight 3)
+  (fill 100)
 
   (draw-plot)
 
+  (plot-point 300 200)
   )
 
 (defsketch graph
