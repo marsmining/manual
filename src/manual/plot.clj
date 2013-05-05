@@ -2,17 +2,18 @@
   "Draw a cartesian grid for basic plotting"
   (:require [quil.core :as q]))
 
-(def scr-w 1000)
-(def scr-h 1000)
+(def scr-w 750)
+(def scr-h 750)
 
 ;; we want our plot to always be -10 to +10
 (def tick (quot scr-w 20))
 (def tick-len (quot scr-w 50))
 
 (def points (atom []))
-(def lines (atom []))
+(def lines  (atom []))
 
 (defn set-points [xs] (reset! points xs))
+(defn set-lines  [xs] (reset! lines  xs))
 
 (defn setup []
   (q/smooth)
@@ -34,16 +35,28 @@
       (doseq [y (range (- h2 step) 0 (* step -1))]
         (q/line [(- w2 z) y] [(+ w2 z) y])))))
 
+(defn from-cartesian
+  "Convert cartesian to our custom screen coords"
+  [x y]
+  [(* (+ x 10) tick) (* (- 10 y) tick)])
+
 (defn plot-point
   "Accepts cartesian"
   ([x y]
      (plot-point x y 10))
   ([x y w]
-     (let [x' (* (+ x 10) tick)
-           y' (* (- 10 y) tick)
+     (let [[x' y'] (from-cartesian x y) 
            label (str x "," y)]
        (q/ellipse x' y' w w)
        (q/text label (+ x' w) (+ y' w)))))
+
+(defn plot-line
+  "Accepts cartesian"
+  [a b]
+  (let [[xa ya] (apply from-cartesian a)
+        [xb yb] (apply from-cartesian b)]
+    (q/debug "drawing line..")
+    (q/line xa ya xb yb)))
 
 (defn draw-plot []
   (let [w (q/width)
@@ -72,7 +85,11 @@
 
   (doseq [[x y] @points]
     (plot-point x y))
-  
+
+  (doseq [[a b] (map vector @lines (rest @lines))]
+    (plot-line a b))
+
+  ;; (q/save-frame "robot-tour-00.png")
   )
 
 (defn start []
