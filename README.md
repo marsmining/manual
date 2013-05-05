@@ -6,4 +6,6 @@ Just a place to stash my answers, in Clojure, while going through problems in [T
 
 ### Problems
 
+_Chapter 1_
+
 [Robot Tour](https://github.com/marsmining/manual/blob/master/doc/robot-tour.md)

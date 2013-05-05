@@ -16,16 +16,19 @@
     (Math/sqrt (+ (* xd xd) (* yd yd)))))
 
 (defn nearest
-  "Nearest neighbor first pass, return list of lines"
-  [[p & ps]]
-  (cons p (map #(nth ps (second %))
-               (sort (map #(vector (distance p %) %2)
-                          ps (range 0 (count ps)))))))
-
-(let [[p & ps] s0]
+  "Given a point, and list of points, find nearest neighbors"
+  [p ps]
   (sort
    (map #(vector (distance p %) %2)
         ps (range 0 (count ps)))))
+
+(defn robot-tour
+  "Create list of points, representing best path"
+  [[p & ps]]
+  (when (seq ps)
+    (let [[_ idx] (first (nearest p ps))
+          point (nth ps idx)]
+      (conj (robot-tour ps) point))))
 
 (comment
 
@@ -37,8 +40,10 @@
 
   (plot/set-points s0)
 
-  (plot/set-lines (nearest s0))
+  (plot/set-lines [])
 
-  (nearest s0)
+  (plot/set-lines (conj (robot-tour s0) (first s0)))
+
+  (robot-tour s0)
 
   )

@@ -89,7 +89,7 @@
   (doseq [[a b] (map vector @lines (rest @lines))]
     (plot-line a b))
 
-  ;; (q/save-frame "robot-tour-00.png")
+  (q/save-frame "doc/img/robot-tour-02.png")
   )
 
 (defn start []
