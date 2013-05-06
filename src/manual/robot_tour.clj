@@ -48,3 +48,4 @@
   (robot-tour s0)
 
   )
+
