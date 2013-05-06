@@ -2,10 +2,6 @@
   "Find shortest tour visiting each point in plane"
   (:require [manual.plot :as plot]))
 
-(def s0 [[ 0  9] [ 2  8] [ 5  6] [ 5  2]
-         [ 4  0] [ 3 -2] [ 0 -5] [-3 -4]
-         [-5 -1] [-7  2] [-5  5] [-4  7]])
-
 (defn distance
   "Distance between two points"
   [a b]
@@ -15,7 +11,7 @@
         yd (- ya yb)]
     (Math/sqrt (+ (* xd xd) (* yd yd)))))
 
-(defn nearest
+(defn nearest-neighbors
   "Given a point, and list of points, find nearest neighbors"
   [p ps]
   (sort
@@ -26,9 +22,14 @@
   "Create list of points, representing best path"
   [[p & ps]]
   (when (seq ps)
-    (let [[_ idx] (first (nearest p ps))
+    (let [[_ idx] (first (nearest-neighbors p ps))
           point (nth ps idx)]
       (conj (robot-tour ps) point))))
+
+;; sample data
+(def s0 [[ 0  9] [ 2  8] [ 5  6] [ 5  2]
+         [ 4  0] [ 3 -2] [ 0 -5] [-3 -4]
+         [-5 -1] [-7  2] [-5  5] [-4  7]])
 
 (comment
 
