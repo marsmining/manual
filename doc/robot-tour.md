@@ -20,3 +20,5 @@ And after using the simple "nearest neighbor" heuristic, starting with the first
 
 <img src="https://raw.github.com/marsmining/manual/master/doc/img/robot-tour-02.png"
      width="50%">
+
+Tagged repo at this point with [nearest-neighbor](https://github.com/marsmining/manual/blob/nearest-neighbor/src/manual/robot_tour.clj) tag.
